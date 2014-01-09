@@ -9,11 +9,16 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Jon Rowe"]
   spec.email         = ["hello@jonrowe.co.uk"]
   spec.license       = "MIT"
+  spec.description   = %q{Allows manual restarts of Sidekiq workers.}
+  spec.summary       = %q{Allows manual restarts of Sidekiq workers via the Web UI.}
+  spec.homepage      = "https://github.com/JonRowe/sidekiq-restart/"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(spec)/})
   spec.require_paths = ["lib"]
+
+  spec.add_dependency "sidekiq", "~> 2.17.2"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"

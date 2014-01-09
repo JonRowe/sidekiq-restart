@@ -1,0 +1,51 @@
+<div class="row header">
+  <div class="col-sm-7">
+    <h3><%= t('Workers') %></h3>
+  </div>
+</div>
+
+<table class="workers table table-hover table-bordered table-striped table-white">
+  <thead>
+    <th><%= t('Worker') %></th>
+    <th><%= t('Queue') %></th>
+    <th><%= t('Class') %></th>
+    <th><%= t('Arguments') %></th>
+    <th><%= t('Started') %></th>
+    <th><%= t('Controls') %></th>
+  </thead>
+  <% workers.each_with_index do |(worker, msg), index| %>
+    <tr>
+      <td><%= worker %></td>
+      <td>
+        <a href="<%= root_path %>queues/<%= msg['queue'] %>"><%= msg['queue'] %></a>
+      </td>
+
+      <td><%= msg['payload']['class'] %></td>
+      <td>
+        <% if msg['payload']['args'].to_s.size > 100 %>
+          <%= h(msg['payload']['args'].inspect[0..100]) + "... " %>
+          <button data-toggle="collapse" data-target="#worker_<%= index %>" class="btn btn-default btn-xs"><%= t('ShowAll') %></button>
+          <div class="toggle" id="worker_<%= index %>" style="display: none;max-width: 750px;"><%= h(msg['payload']['args']) %></div>
+        <% else %>
+          <%= h(msg['payload']['args']) %>
+        <% end %>
+      </td>
+      <td><%= relative_time(msg['run_at'].is_a?(Numeric) ? Time.at(msg['run_at']) : Time.parse(msg['run_at'])) %></td>
+      <td>
+        <form action="<%= root_path %>workers/<%= worker %>" method="post">
+          <input name="_method" type="hidden" value="delete" />
+          <button class="btn btn-primary btn-block" type="submit">Restart</button>
+        </form>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<% if workers_size > 0 %>
+  <div class="row">
+    <div class="col-sm-2 pull-right">
+      <form action="<%= root_path %>reset" method="post">
+        <button class="btn btn-primary btn-block" type="submit"><%= t('ClearWorkerList') %></button>
+      </form>
+    </div>
+  </div>
+<% end %>

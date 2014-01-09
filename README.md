@@ -1,5 +1,7 @@
 # Sidekiq::Restart
 
+Restart workers for Sidekiq via the web interface.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -15,6 +17,12 @@ Or install it yourself as:
     $ gem install sidekiq-restart
 
 ## Usage
+
+Wherever you mount `Sidekiq::Web`
+
+```Ruby
+require 'sidekiq/restart'
+```
 
 ## Contributing
 

@@ -14,6 +14,7 @@ module Sidekiq
         end
 
         app.delete "/workers/:id" do |id|
+          Restart.worker id
           redirect "#{root_path}workers", 301
         end
       end

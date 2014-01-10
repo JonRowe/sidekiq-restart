@@ -10,7 +10,7 @@ module Sidekiq
         @sidekiq.redis do |conn|
           payload = conn.get("worker:#{id}")
           if payload
-            msg = @sidekiq.load_json(payload)[:payload]
+            msg = @sidekiq.load_json(payload)['payload']
             Sidekiq::Client.push msg
 
             # cleanup redis details about the worker

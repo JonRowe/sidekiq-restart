@@ -1,7 +1,7 @@
 require 'sidekiq/restart/command'
 
 describe "Sidekiq::Restart::Command" do
-  let(:sidekiq) { class_double "Sidekiq" }
+  let(:sidekiq) { double "Sidekiq" }
   let(:command) { Sidekiq::Restart::Command.new sidekiq }
 
   describe '#run' do
@@ -13,7 +13,7 @@ describe "Sidekiq::Restart::Command" do
 
     context "theres a worker with id" do
       let(:redis) { instance_double "Redis", get: json, del: nil, srem: nil }
-      let(:data)  { { payload: msg } }; let(:json) { double }; let(:msg) { double }
+      let(:data)  { { 'payload' => msg } }; let(:json) { double }; let(:msg) { double }
 
       before do
         class_double("Sidekiq::Client", push: nil).as_stubbed_const
